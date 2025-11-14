@@ -11,6 +11,7 @@ const Navigation = () => {
     { path: "/", label: "Home" },
     { path: "/about", label: "About Us" },
     { path: "/sizing-guide", label: "Sizing Guide" },
+    { path: "/customer-service", label: "Customer Service + Returns" },
     { path: "/contact", label: "Contact Us" },
   ];
 

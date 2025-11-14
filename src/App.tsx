@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import SizingGuide from "./pages/SizingGuide";
+import CustomerService from "./pages/CustomerService";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
@@ -27,6 +28,7 @@ const App = () => (
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/sizing-guide" element={<SizingGuide />} />
+              <Route path="/customer-service" element={<CustomerService />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<Cart />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
