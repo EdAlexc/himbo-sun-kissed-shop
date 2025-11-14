@@ -1,4 +1,4 @@
-import { Package, RefreshCw, Mail, Phone, MessageCircle } from "lucide-react";
+import { Package, RefreshCw, Mail, Phone, MessageCircle, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const CustomerService = () => {
@@ -59,6 +59,48 @@ const CustomerService = () => {
               </CardContent>
             </Card>
           </div>
+
+          {/* Return Tracking */}
+          <Card className="mb-8">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <RefreshCw className="w-8 h-8 text-primary" />
+                <div>
+                  <CardTitle className="text-2xl">Track Your Return</CardTitle>
+                  <CardDescription>Monitor the status of your return</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-8">
+                <p className="text-muted-foreground mb-2">
+                  No returns in process. If this is a mistake please call or email us to verify on the potential issue(s).
+                </p>
+              </div>
+              
+              {/* Process visualization (shown when there's an active return) */}
+              <div className="hidden">
+                <div className="flex justify-between items-center max-w-4xl mx-auto">
+                  {[
+                    { label: "Request Return", icon: Mail },
+                    { label: "Pack & Ship", icon: Package },
+                    { label: "Quality Check", icon: CheckCircle2 },
+                    { label: "Refund Processed", icon: CheckCircle2 }
+                  ].map((step, index) => (
+                    <div key={index} className="flex flex-col items-center flex-1 relative">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                        <step.icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <span className="text-sm text-center font-medium">{step.label}</span>
+                      {index < 3 && (
+                        <div className="absolute top-6 left-1/2 w-full h-0.5 bg-border -z-10" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Returns Policy */}
           <Card className="mb-8">
