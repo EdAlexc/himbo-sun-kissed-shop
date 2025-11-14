@@ -2,6 +2,8 @@ import { Package, RefreshCw, Mail, Phone, MessageCircle, CheckCircle2 } from "lu
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const CustomerService = () => {
+  // Set to -1 for no active returns, 0-3 for active step
+  const activeReturnStep = -1;
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
       {/* Hero Section */}
@@ -72,31 +74,70 @@ const CustomerService = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8">
-                <p className="text-muted-foreground mb-2">
-                  No returns in process. If this is a mistake please call or email us to verify on the potential issue(s).
-                </p>
-              </div>
+              {activeReturnStep === -1 ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground mb-8">
+                    No returns in process. If this is a mistake please call or email us to verify on the potential issue(s).
+                  </p>
+                </div>
+              ) : null}
               
-              {/* Process visualization (shown when there's an active return) */}
-              <div className="hidden">
-                <div className="flex justify-between items-center max-w-4xl mx-auto">
+              {/* Process visualization */}
+              <div className="py-8">
+                <div className="relative flex justify-between items-start max-w-4xl mx-auto px-4">
                   {[
                     { label: "Request Return", icon: Mail },
                     { label: "Pack & Ship", icon: Package },
                     { label: "Quality Check", icon: CheckCircle2 },
                     { label: "Refund Processed", icon: CheckCircle2 }
-                  ].map((step, index) => (
-                    <div key={index} className="flex flex-col items-center flex-1 relative">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
-                        <step.icon className="w-6 h-6 text-primary" />
+                  ].map((step, index) => {
+                    const StepIcon = step.icon;
+                    const isActive = activeReturnStep >= index && activeReturnStep !== -1;
+                    
+                    return (
+                      <div key={index} className="flex flex-col items-center flex-1 relative z-10">
+                        {/* Connector Line/Arrow */}
+                        {index < 3 && (
+                          <div 
+                            className={`absolute top-6 left-[calc(50%+24px)] right-[calc(-100%+24px)] h-0.5 ${
+                              isActive ? 'bg-[#91A8D0]' : 'bg-[#F7CAC9]'
+                            }`}
+                            style={{ width: 'calc(100% - 48px)' }}
+                          >
+                            {/* Arrow head */}
+                            <div 
+                              className={`absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-l-8 border-transparent ${
+                                isActive ? 'border-l-[#91A8D0]' : 'border-l-[#F7CAC9]'
+                              }`}
+                            />
+                          </div>
+                        )}
+                        
+                        {/* Icon Circle */}
+                        <div 
+                          className={`w-12 h-12 rounded-full border-2 flex items-center justify-center mb-3 bg-background ${
+                            isActive 
+                              ? 'border-[#91A8D0] bg-[#91A8D0]/10' 
+                              : 'border-[#F7CAC9]'
+                          }`}
+                        >
+                          <StepIcon 
+                            className={`w-6 h-6 ${
+                              isActive ? 'text-[#91A8D0]' : 'text-[#F7CAC9]'
+                            }`}
+                            strokeWidth={2}
+                          />
+                        </div>
+                        
+                        {/* Label */}
+                        <span className={`text-sm text-center font-medium max-w-[100px] ${
+                          isActive ? 'text-foreground' : 'text-muted-foreground'
+                        }`}>
+                          {step.label}
+                        </span>
                       </div>
-                      <span className="text-sm text-center font-medium">{step.label}</span>
-                      {index < 3 && (
-                        <div className="absolute top-6 left-1/2 w-full h-0.5 bg-border -z-10" />
-                      )}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </CardContent>
